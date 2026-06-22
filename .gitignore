@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# Large malware datasets (not for version control)
+virusshare/
+malicia/
+
+# Generated results / artifacts
+results_scaleup/
+runs/
+comparison/checkpoints/
+comparison/results/
+comparison/synthetic/
+*.tar.gz
+*.pt
+*.pth
+*.ckpt
+
+# Reference papers (copyrighted)
+*.pdf
+
+# Local Claude Code settings
+.claude/settings.local.json
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

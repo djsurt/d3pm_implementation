@@ -1,0 +1,18 @@
+# D3PM (absorbing-state) for synthetic malware opcode generation.
+# Installed into a local virtualenv (.venv) — never install globally.
+#
+#   python3 -m venv .venv
+#   .venv/bin/pip install -r requirements.txt
+#
+# Versions below are what we developed/verified against (Python 3.14, macOS/MPS).
+# torch 2.12 ships Apple-Silicon (MPS) and CUDA builds; on an HPC GPU the same
+# line works, or pin a torch+cuXXX wheel if the cluster driver is older.
+torch==2.12.0
+numpy==2.4.6
+tqdm==4.67.3
+pytest==9.0.3
+
+# VirusShare PE → opcode extraction (d3pm/disasm.py). Pod-side only; not needed
+# for the Malicia opcode pipeline. capstone = disassembler, pefile = PE parser.
+capstone==5.0.6
+pefile==2024.8.26
