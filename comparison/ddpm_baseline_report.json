@@ -1,0 +1,83 @@
+{
+  "per_family": {
+    "winwebsec": {
+      "binary_classification": {
+        "RF": 0.9875330562901398,
+        "SVM": 0.8989690721649485,
+        "MLP": 0.993907083015994
+      },
+      "cosine_similarity": {
+        "real_vs_synthetic_median": 0.540033221244812,
+        "baseline_real_vs_real_median": 0.5145803689956665,
+        "deviation": 0.025452852249145508
+      }
+    },
+    "zbot": {
+      "binary_classification": {
+        "RF": 0.991466252909232,
+        "SVM": 0.9029057406094968,
+        "MLP": 0.9968847352024922
+      },
+      "cosine_similarity": {
+        "real_vs_synthetic_median": 0.6591248512268066,
+        "baseline_real_vs_real_median": 0.6583537459373474,
+        "deviation": 0.0007711052894592285
+      }
+    },
+    "zeroaccess": {
+      "binary_classification": {
+        "RF": 0.9732484076433121,
+        "SVM": 0.7542735042735043,
+        "MLP": 0.973651191969887
+      },
+      "cosine_similarity": {
+        "real_vs_synthetic_median": 0.7114989757537842,
+        "baseline_real_vs_real_median": 0.7218759059906006,
+        "deviation": 0.010376930236816406
+      }
+    }
+  },
+  "synthetic_only_training": {
+    "families": [
+      "winwebsec",
+      "zbot",
+      "zeroaccess"
+    ],
+    "scores": {
+      "RF": 0.995905643561209,
+      "SVM": 0.9946320362155402,
+      "MLP": 0.9959015044747955
+    }
+  },
+  "threshold_augmentation": {
+    "families": [
+      "winwebsec",
+      "zbot",
+      "zeroaccess"
+    ],
+    "threshold": 0.95,
+    "augmented_families": [],
+    "baseline_weighted_f1": {
+      "RF": 0.9995726409606408,
+      "SVM": 0.9995726409606408,
+      "MLP": 0.9995726409606408
+    },
+    "augmented_weighted_f1": {
+      "RF": 0.9995726409606408,
+      "SVM": 0.9995726409606408,
+      "MLP": 0.9995726409606408
+    }
+  },
+  "fidelity_score": {
+    "families": [
+      "winwebsec",
+      "zbot",
+      "zeroaccess"
+    ],
+    "scores": {
+      "RF": 0.9989996651653305,
+      "SVM": 0.9970012816337116,
+      "MLP": 0.9996666665833333
+    }
+  }
+}
