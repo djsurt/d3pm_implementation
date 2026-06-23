@@ -1,0 +1,46 @@
+{
+  "family": "Obfuscator",
+  "n_real_windows": 496838,
+  "n_synthetic": 500,
+  "novelty": {
+    "k": 4,
+    "synthetic_vs_train": {
+      "n_queries": 500,
+      "max_jaccard_mean": 0.025279602833333265,
+      "max_jaccard_median": 0.019151990148907942,
+      "max_jaccard_p95": 0.0761112938776853,
+      "exact_copy_rate": 0.0,
+      "near_dup_rate": 0.0
+    },
+    "real_holdout_vs_train": {
+      "n_queries": 500,
+      "max_jaccard_mean": 0.027017005121322733,
+      "max_jaccard_median": 0.005012531328320802,
+      "max_jaccard_p95": 0.12927355854711686,
+      "exact_copy_rate": 0.038,
+      "near_dup_rate": 0.002
+    },
+    "mean_jaccard_gap": -0.001737402287989468,
+    "memorizing": false
+  },
+  "transition_kl": {
+    "synthetic": {
+      "transition_kl_real_vs_synth": 1.1074397278026629,
+      "transition_kl_synth_vs_real": 0.33407122364735786,
+      "transition_symmetric_kl": 0.7207554757250103,
+      "vocab_size": 1470
+    },
+    "baseline_real_vs_real": {
+      "transition_kl_real_vs_synth": 0.022685820053123435,
+      "transition_kl_synth_vs_real": 0.023434424115414076,
+      "transition_symmetric_kl": 0.023060122084268754,
+      "vocab_size": 1470
+    },
+    "baseline_real_vs_random": {
+      "transition_kl_real_vs_synth": 13.100668969899452,
+      "transition_kl_synth_vs_real": 12.349957740579805,
+      "transition_symmetric_kl": 12.725313355239628,
+      "vocab_size": 1470
+    }
+  }
+}

@@ -17,6 +17,10 @@ runs/
 comparison/checkpoints/
 comparison/results/
 comparison/synthetic/
+# VirusShare run: keep eval_results/, drop heavy artifacts
+results_virusshare/checkpoints/
+results_virusshare/synthetic/
+results_virusshare/run_virusshare.log
 *.tar.gz
 *.pt
 *.pth

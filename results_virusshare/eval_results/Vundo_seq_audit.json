@@ -1,0 +1,46 @@
+{
+  "family": "Vundo",
+  "n_real_windows": 165947,
+  "n_synthetic": 500,
+  "novelty": {
+    "k": 4,
+    "synthetic_vs_train": {
+      "n_queries": 500,
+      "max_jaccard_mean": 0.018476962480262097,
+      "max_jaccard_median": 0.007397032433142207,
+      "max_jaccard_p95": 0.05451461308623499,
+      "exact_copy_rate": 0.0,
+      "near_dup_rate": 0.0
+    },
+    "real_holdout_vs_train": {
+      "n_queries": 500,
+      "max_jaccard_mean": 0.13285780674384615,
+      "max_jaccard_median": 0.03485987696514012,
+      "max_jaccard_p95": 0.7967338026913815,
+      "exact_copy_rate": 0.112,
+      "near_dup_rate": 0.03
+    },
+    "mean_jaccard_gap": -0.11438084426358405,
+    "memorizing": false
+  },
+  "transition_kl": {
+    "synthetic": {
+      "transition_kl_real_vs_synth": 0.7088866768569991,
+      "transition_kl_synth_vs_real": 0.3108523869121043,
+      "transition_symmetric_kl": 0.5098695318845518,
+      "vocab_size": 1156
+    },
+    "baseline_real_vs_real": {
+      "transition_kl_real_vs_synth": 0.03238235258672225,
+      "transition_kl_synth_vs_real": 0.03639221773288514,
+      "transition_symmetric_kl": 0.034387285159803695,
+      "vocab_size": 1156
+    },
+    "baseline_real_vs_random": {
+      "transition_kl_real_vs_synth": 13.41646914252145,
+      "transition_kl_synth_vs_real": 11.776138324279659,
+      "transition_symmetric_kl": 12.596303733400553,
+      "vocab_size": 1156
+    }
+  }
+}

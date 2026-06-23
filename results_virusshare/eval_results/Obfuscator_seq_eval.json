@@ -1,0 +1,119 @@
+{
+  "family": "Obfuscator",
+  "n_real": 1735,
+  "n_synthetic": 500,
+  "synthetic": {
+    "freq_kl": {
+      "kl_real_vs_synth": 0.14322796998344106,
+      "kl_synth_vs_real": 0.1423323131766277,
+      "symmetric_kl": 0.14278014158003438,
+      "vocab_real": 1470,
+      "vocab_synth": 578,
+      "vocab_overlap": 578
+    },
+    "ngram_overlap": {
+      "1gram_precision": 1.0,
+      "1gram_recall": 0.39319727891156464,
+      "1gram_f1": 0.564453125,
+      "2gram_precision": 0.9923002421307506,
+      "2gram_recall": 0.10129016312407316,
+      "2gram_f1": 0.1838169993272034,
+      "3gram_precision": 0.9485721643868181,
+      "3gram_recall": 0.01600723831721494,
+      "3gram_f1": 0.03148319496321481
+    },
+    "edit_distance": {
+      "real_vs_synthetic": {
+        "mean": 182.225,
+        "median": 184.0,
+        "std": 10.681964940964747
+      },
+      "real_vs_real": {
+        "mean": 181.82,
+        "median": 184.5,
+        "std": 15.797708694617711
+      },
+      "synth_vs_synth": {
+        "mean": 182.93,
+        "median": 185.0,
+        "std": 11.649682399104277
+      }
+    }
+  },
+  "baseline_real_vs_real": {
+    "freq_kl": {
+      "kl_real_vs_synth": 0.0016470484743167134,
+      "kl_synth_vs_real": 0.0016654673140729394,
+      "symmetric_kl": 0.0016562578941948264,
+      "vocab_real": 1336,
+      "vocab_synth": 1346,
+      "vocab_overlap": 1212
+    },
+    "ngram_overlap": {
+      "1gram_precision": 0.9004457652303121,
+      "1gram_recall": 0.907185628742515,
+      "1gram_f1": 0.9038031319910514,
+      "2gram_precision": 0.795229923504261,
+      "2gram_recall": 0.8181018438171384,
+      "2gram_f1": 0.8065037580677514,
+      "3gram_precision": 0.5992025225563299,
+      "3gram_recall": 0.6318108935298785,
+      "3gram_f1": 0.6150748257241734
+    },
+    "edit_distance": {
+      "real_vs_synthetic": {
+        "mean": 178.42,
+        "median": 183.0,
+        "std": 26.676086669524825
+      },
+      "real_vs_real": {
+        "mean": 179.755,
+        "median": 183.0,
+        "std": 16.297698457144186
+      },
+      "synth_vs_synth": {
+        "mean": 180.13,
+        "median": 183.5,
+        "std": 19.33890120973785
+      }
+    }
+  },
+  "baseline_real_vs_random": {
+    "freq_kl": {
+      "kl_real_vs_synth": 2.953213851016943,
+      "kl_synth_vs_real": 6.192452037507561,
+      "symmetric_kl": 4.572832944262252,
+      "vocab_real": 1470,
+      "vocab_synth": 1470,
+      "vocab_overlap": 1470
+    },
+    "ngram_overlap": {
+      "1gram_precision": 1.0,
+      "1gram_recall": 1.0,
+      "1gram_f1": 1.0,
+      "2gram_precision": 0.09458299645500343,
+      "2gram_recall": 0.11276322293623332,
+      "2gram_f1": 0.10287608374578622,
+      "3gram_precision": 0.0018118073366432152,
+      "3gram_recall": 7.722387200494232e-05,
+      "3gram_f1": 0.00014813389765294343
+    },
+    "edit_distance": {
+      "real_vs_synthetic": {
+        "mean": 199.85,
+        "median": 200.0,
+        "std": 0.40926763859362253
+      },
+      "real_vs_real": {
+        "mean": 181.82,
+        "median": 184.5,
+        "std": 15.797708694617711
+      },
+      "synth_vs_synth": {
+        "mean": 199.885,
+        "median": 200.0,
+        "std": 0.3489627487282847
+      }
+    }
+  }
+}

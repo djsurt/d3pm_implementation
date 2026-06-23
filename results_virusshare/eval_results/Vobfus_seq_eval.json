@@ -1,0 +1,119 @@
+{
+  "family": "Vobfus",
+  "n_real": 4179,
+  "n_synthetic": 500,
+  "synthetic": {
+    "freq_kl": {
+      "kl_real_vs_synth": 0.028212576682106087,
+      "kl_synth_vs_real": 0.02463294608536541,
+      "symmetric_kl": 0.026422761383735748,
+      "vocab_real": 922,
+      "vocab_synth": 362,
+      "vocab_overlap": 362
+    },
+    "ngram_overlap": {
+      "1gram_precision": 1.0,
+      "1gram_recall": 0.3926247288503254,
+      "1gram_f1": 0.5638629283489096,
+      "2gram_precision": 0.9881920463406483,
+      "2gram_recall": 0.10463799570643327,
+      "2gram_f1": 0.18923790731161005,
+      "3gram_precision": 0.9016507724053315,
+      "3gram_recall": 0.024728169847768995,
+      "3gram_f1": 0.048136183642480714
+    },
+    "edit_distance": {
+      "real_vs_synthetic": {
+        "mean": 185.625,
+        "median": 188.0,
+        "std": 10.210992850844622
+      },
+      "real_vs_real": {
+        "mean": 159.95,
+        "median": 173.0,
+        "std": 37.53208627294784
+      },
+      "synth_vs_synth": {
+        "mean": 169.055,
+        "median": 184.5,
+        "std": 27.43049352454308
+      }
+    }
+  },
+  "baseline_real_vs_real": {
+    "freq_kl": {
+      "kl_real_vs_synth": 0.0011113415635191498,
+      "kl_synth_vs_real": 0.001042562872043362,
+      "symmetric_kl": 0.0010769522177812559,
+      "vocab_real": 863,
+      "vocab_synth": 855,
+      "vocab_overlap": 796
+    },
+    "ngram_overlap": {
+      "1gram_precision": 0.9309941520467836,
+      "1gram_recall": 0.9223638470451911,
+      "1gram_f1": 0.9266589057043072,
+      "2gram_precision": 0.8061030600380024,
+      "2gram_recall": 0.7995049504950495,
+      "2gram_f1": 0.8027904480815671,
+      "3gram_precision": 0.6114806055633316,
+      "3gram_recall": 0.6030559140239904,
+      "3gram_f1": 0.6072390406527014
+    },
+    "edit_distance": {
+      "real_vs_synthetic": {
+        "mean": 158.015,
+        "median": 175.5,
+        "std": 43.85036801441922
+      },
+      "real_vs_real": {
+        "mean": 160.395,
+        "median": 174.0,
+        "std": 40.15568421780409
+      },
+      "synth_vs_synth": {
+        "mean": 159.18,
+        "median": 174.0,
+        "std": 42.165478771146425
+      }
+    }
+  },
+  "baseline_real_vs_random": {
+    "freq_kl": {
+      "kl_real_vs_synth": 3.4796957711310705,
+      "kl_synth_vs_real": 6.675481880212413,
+      "symmetric_kl": 5.077588825671741,
+      "vocab_real": 922,
+      "vocab_synth": 922,
+      "vocab_overlap": 922
+    },
+    "ngram_overlap": {
+      "1gram_precision": 1.0,
+      "1gram_recall": 1.0,
+      "1gram_f1": 1.0,
+      "2gram_precision": 0.0996019909518672,
+      "2gram_recall": 0.2591710113472835,
+      "2gram_f1": 0.14390128890286075,
+      "3gram_precision": 0.0017139943520552243,
+      "3gram_recall": 0.0003341954607538287,
+      "3gram_f1": 0.0005593320781426592
+    },
+    "edit_distance": {
+      "real_vs_synthetic": {
+        "mean": 199.78,
+        "median": 200.0,
+        "std": 0.49152822909778027
+      },
+      "real_vs_real": {
+        "mean": 159.95,
+        "median": 173.0,
+        "std": 37.53208627294784
+      },
+      "synth_vs_synth": {
+        "mean": 199.76,
+        "median": 200.0,
+        "std": 0.48207883172775795
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "family": "Vobfus",
+  "n_real_windows": 914395,
+  "n_synthetic": 500,
+  "novelty": {
+    "k": 4,
+    "synthetic_vs_train": {
+      "n_queries": 500,
+      "max_jaccard_mean": 0.1996031451955619,
+      "max_jaccard_median": 0.13171055743360738,
+      "max_jaccard_p95": 0.4502633109825174,
+      "exact_copy_rate": 0.0,
+      "near_dup_rate": 0.0
+    },
+    "real_holdout_vs_train": {
+      "n_queries": 500,
+      "max_jaccard_mean": 0.3694149938891768,
+      "max_jaccard_median": 0.27167321408139133,
+      "max_jaccard_p95": 0.8720826792255361,
+      "exact_copy_rate": 0.36,
+      "near_dup_rate": 0.044
+    },
+    "mean_jaccard_gap": -0.1698118486936149,
+    "memorizing": false
+  },
+  "transition_kl": {
+    "synthetic": {
+      "transition_kl_real_vs_synth": 0.3272148869367328,
+      "transition_kl_synth_vs_real": 0.09292434392728106,
+      "transition_symmetric_kl": 0.21006961543200692,
+      "vocab_size": 922
+    },
+    "baseline_real_vs_real": {
+      "transition_kl_real_vs_synth": 0.005814061502527558,
+      "transition_kl_synth_vs_real": 0.008821985773685686,
+      "transition_symmetric_kl": 0.007318023638106622,
+      "vocab_size": 922
+    },
+    "baseline_real_vs_random": {
+      "transition_kl_real_vs_synth": 13.372866983579272,
+      "transition_kl_synth_vs_real": 12.495028398089481,
+      "transition_symmetric_kl": 12.933947690834376,
+      "vocab_size": 922
+    }
+  }
+}
