@@ -52,8 +52,15 @@ as a Capable Alternative to Embedding-Space DDPM*
    - 5.4 DDPM embedding parity — `FINDINGS.md §2` (frame as parity, not loss).
    - 5.5 **Downstream utility (headline)** — `FINDINGS.md §2.5`, the +4.1pt low-data lift,
      3 seeds, monotone decay to ~0 at full data. This is the section that carries the paper.
-   - 5.6 **VirusShare generalization** — repeat 5.1–5.5 on VirusShare families; the claim
-     is "the capability result is dataset-independent." (← the new experiments.)
+   - 5.6 **VirusShare generalization** — second dataset, new families (Obfuscator/Vobfus/
+     Vundo). The claim is "the fidelity + non-memorization result is dataset-independent."
+     **Done** (`FINDINGS.md §2.6`): seq-level fidelity, memorization audit, transition KL,
+     convergence — all replicate run_01 (zero exact-copies across all 3 families).
+     **Still to run for the full capability claim:** the downstream classifier utility
+     curve (§5.5 analogue) on VirusShare — this is the headline experiment and has *not*
+     been run on these families yet. Note: no DDPM baseline exists for VirusShare (Bao et
+     al. is Malicia-only), so the embedding parity (§5.4) is N/A here — frame 5.6 as
+     seq-level fidelity + audit + downstream utility, not a DDPM head-to-head.
 
 6. **Discussion**
    - Why parity-not-win is the honest and correct framing (DDPM optimizes its home metric).

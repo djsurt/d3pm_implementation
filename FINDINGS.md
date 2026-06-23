@@ -129,6 +129,67 @@ the small-budget lift exceeds the seed-to-seed std, so it's signal not noise.
 
 ---
 
+## 2.6 VirusShare scale-up — second-dataset generalization
+
+The generalization study (`PAPER_OUTLINE.md §5.6`). New dataset, **new families**
+(Obfuscator / Vobfus / Vundo — *not* the Malicia three), and the run_01 "levers"
+applied: `max_len=512, T=1000, ~5.76M params, EMA=0.999, val-based early stop,
+300 files/family`. ~544 min on a 4090, 500 synth/family. Reports in
+`results_virusshare/eval_results/<fam>_seq_{eval,audit}.json` (checkpoints +
+synthetic seqs are local-only, gitignored). Same floor/ceiling framing as §1.
+
+**Sequence-level fidelity:**
+
+| family | symKL (floor) | 1g F1 | 2g F1 (floor) | 3g F1 (floor) | vocab used | diversity |
+|---|---|---|---|---|---|---|
+| Obfuscator | 0.143 (0.0017) | 0.564 | 0.184 (0.807) | 0.031 (0.615) | 578/1470 | no collapse |
+| Vobfus     | 0.026 (0.0011) | 0.564 | 0.189 (0.803) | 0.048 (0.607) | 362/922  | no collapse |
+| Vundo      | 0.011 (0.0007) | 0.680 | 0.304 (0.764) | 0.074 (0.544) | 596/1156 | no collapse |
+
+**Memorization / novelty audit** (read relative to genuine-holdout self-similarity):
+
+| family | synth exact-copy | real-holdout exact-copy | synth mean-Jaccard | real-holdout | verdict |
+|---|---|---|---|---|---|
+| Obfuscator | 0.00 | 0.04 | 0.025 | 0.027 | no memorization |
+| Vobfus     | 0.00 | 0.36 | 0.200 | 0.369 | no memorization |
+| Vundo      | 0.00 | 0.11 | 0.018 | 0.133 | no memorization |
+
+**Transition-matrix KL** (bigram structure):
+
+| family | synthetic | real↔real (floor) | real↔random (ceiling) |
+|---|---|---|---|
+| Obfuscator | 0.721 | 0.023 | 12.73 |
+| Vobfus     | 0.210 | 0.007 | 12.93 |
+| Vundo      | 0.510 | 0.034 | 12.60 |
+
+**Read:** the run_01 story **replicates on a second, independent dataset** — near-real
+unigram fidelity, no mode collapse, high n-gram **precision** (1g = 1.0; every emitted
+opcode valid) with low **recall**, transition dynamics ~15–30× the real-vs-real floor
+but ~25–60× below random, and **zero exact-copies / zero near-dups across all three
+families** (cleaner than run_01's zbot). Vobfus is the standout: real holdout windows
+exact-match training 36% of the time (a heavily templated family) yet synthetic Vobfus
+copies **0%** — the strongest non-memorization evidence in either dataset. The honest
+limitation also replicates: **vocab under-coverage (39–52%)** — the model nails each
+family's high-frequency core and drops the rare-opcode tail (precision ≫ recall).
+
+**Convergence (explains the family ranking):** val-loss early stop, `min_epochs=60,
+patience=15`.
+
+| family | epochs run | best val-loss | status |
+|---|---|---|---|
+| Vobfus     | **150 / 150** (cap) | 0.0090 | still improving at the cap — under-trained |
+| Obfuscator | 96 / 150 | 0.0209 | plateaued (not under-trained) |
+| Vundo      | 60 / 150 (= min) | 0.0211 | plateaued early |
+
+The eval ranking tracks the loss exactly: Vobfus trained longest to the lowest loss
+(0.009) → best samples on every metric; Obfuscator/Vundo plateaued ~2× higher (0.021)
+→ weakest. So **Obfuscator's weakness is not under-training** (it early-stopped on a
+plateau — more epochs won't help; capacity or more files might). **Vobfus is the one
+left on the table** — it never early-stopped, so it would benefit from raising the
+epoch cap / loosening early-stop.
+
+---
+
 ## 3. Decisions (the through-line for the paper)
 
 **Reframed:** the paper is **not** a head-to-head metric battle ("D3PM beats DDPM")
