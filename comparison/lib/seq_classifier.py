@@ -46,6 +46,7 @@ from __future__ import annotations
 import argparse
 import json
 import random
+import sys
 from pathlib import Path
 from typing import Optional
 
@@ -56,6 +57,13 @@ from sklearn.pipeline import make_pipeline
 from sklearn.metrics import f1_score
 
 from loader import load_family_opcodes
+
+# Share the EXACT file-level test split the generator excludes from training, so
+# the two are provably disjoint (no train/test contamination). `d3pm.splits` is
+# pure stdlib, so it imports cleanly in this sklearn (py3.12) venv. Repo root is
+# two levels up from comparison/lib/.
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from d3pm.splits import split_sequences
 
 
 # ── data prep ───────────────────────────────────────────────────────────────
@@ -163,14 +171,13 @@ def budget_sweep(
     synth = load_synth_windows(Path(run_dir), families, window, min_chunk)
 
     # 1) Fixed test split, by FILE, per family. Remaining files form the train pool.
-    rng = random.Random(test_seed)
+    #    Uses the SHARED d3pm.splits split (fresh per-family RNG, seed=test_seed) —
+    #    the identical split the generator passes to `--holdout-test-frac`, so the
+    #    files the generator trained on and this test set are guaranteed disjoint.
     train_pool: dict[str, list[list[str]]] = {}
     test_windows: dict[str, list[list[str]]] = {}
     for fam in families:
-        files = list(real[fam])
-        rng.shuffle(files)
-        n_test = max(1, int(round(len(files) * test_frac)))
-        test_files, pool_files = files[:n_test], files[n_test:]
+        pool_files, test_files = split_sequences(list(real[fam]), test_frac, test_seed)
         tw = []
         for f in test_files:
             tw.extend(chunk_sequence(f, window, min_chunk))

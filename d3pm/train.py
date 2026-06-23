@@ -72,6 +72,7 @@ from d3pm.config import Config, device
 from d3pm.data import OpcodeChunkedDataset, Vocabulary, load_family_opcodes
 from d3pm.denoiser import TransformerDenoiser
 from d3pm.diffusion import AbsorbingDiffusion
+from d3pm.splits import split_sequences
 
 
 # ── new PyTorch concepts used in this file ───────────────────────────────────
@@ -169,6 +170,8 @@ def train(
     patience: int = 0,
     min_epochs: int = 0,
     warmup_frac: float = 0.0,
+    holdout_test_frac: float = 0.0,
+    holdout_seed: int = 1234,
     dev: torch.device | None = None,
     verbose: bool = True,
 ) -> dict:
@@ -196,6 +199,13 @@ def train(
                  to `lr` before cosine annealing begins. A cold start at the full
                  lr=1e-3 was enough to strand the scale-up model on that flat basin;
                  a short warmup lets it find the descent direction first.
+      holdout_test_frac  if >0, exclude the downstream classifier's held-out TEST
+                 files from the generator's training set (train/test contamination
+                 fix). The split is the SAME deterministic file-level split the
+                 classifier uses (`d3pm.splits.split_sequences`, fresh per-family
+                 RNG), so the generator provably never sees a test file. Leave 0.0
+                 to train on the full corpus (the old, contaminated behaviour).
+      holdout_seed  seed for that split; must match the classifier's `test_seed`.
     """
     cfg = cfg or Config.default()
     dev = dev or device()
@@ -205,6 +215,24 @@ def train(
     sequences = load_family_opcodes(malicia_dir, family, max_files=max_files)
     if not sequences:
         raise ValueError(f"no opcode files found for family '{family}' under {malicia_dir}")
+
+    # Contamination fix: drop the downstream classifier's held-out TEST files so the
+    # generator never trains on them. Uses the identical deterministic split the
+    # classifier applies (d3pm.splits), so the two are provably disjoint. NB: this
+    # is applied to the (already `max_files`-capped) canonical-order list — the
+    # classifier loads the full corpus uncapped, so for an apples-to-apples test
+    # split leave `max_files=None` when `holdout_test_frac>0`.
+    n_before = len(sequences)
+    n_test = 0
+    if holdout_test_frac > 0:
+        sequences, test_seqs = split_sequences(sequences, holdout_test_frac, holdout_seed)
+        n_test = len(test_seqs)
+        if not sequences:
+            raise ValueError(
+                f"family '{family}': holdout_test_frac={holdout_test_frac} left no "
+                f"training files (n={n_before})"
+            )
+
     vocab = Vocabulary.from_sequences(sequences)
     dataset = OpcodeChunkedDataset(sequences, vocab, max_len=cfg.max_len, min_chunk=min_chunk)
     if len(dataset) == 0:
@@ -268,8 +296,12 @@ def train(
 
     if verbose:
         print(f"Device: {dev}")
-        print(f"  family={family}  files={len(sequences)}  chunks={len(dataset)}  "
-              f"vocab={vocab.size}")
+        holdout_msg = (
+            f" (held out {n_test} test files of {n_before}, seed={holdout_seed})"
+            if holdout_test_frac > 0 else ""
+        )
+        print(f"  family={family}  files={len(sequences)}{holdout_msg}  "
+              f"chunks={len(dataset)}  vocab={vocab.size}")
         print(f"  train/val chunks={len(train_ds)}/{len(val_ds) if val_ds else 0}  "
               f"batches/epoch={steps_per_epoch}  epochs={epochs}  batch={batch_size}  "
               f"T={cfg.T}  max_len={cfg.max_len}")
@@ -363,6 +395,8 @@ def train(
             "diffusion_config": diffusion_config,
             "lambda_ce": cfg.lambda_ce,
             "ema_decay": ema_decay,
+            "holdout_test_frac": holdout_test_frac,
+            "holdout_seed": holdout_seed,
         },
         ckpt_path,
     )
@@ -376,6 +410,10 @@ def train(
                 "batch_size": batch_size,
                 "lr": lr,
                 "ema_decay": ema_decay,
+                "holdout_test_frac": holdout_test_frac,
+                "holdout_seed": holdout_seed,
+                "n_train_files": len(sequences),
+                "n_test_files_excluded": n_test,
                 "best_val_loss": best_val if val_losses else None,
                 "epoch_losses": epoch_losses,
                 "val_losses": val_losses,
@@ -464,6 +502,11 @@ def _build_arg_parser() -> argparse.ArgumentParser:
                     help="never early-stop before this many epochs (rides out the init plateau)")
     ap.add_argument("--warmup-frac", type=float, default=0.0,
                     help="fraction of total steps to linearly warm up the LR before cosine")
+    ap.add_argument("--holdout-test-frac", type=float, default=0.0,
+                    help="exclude the downstream classifier's held-out test files from "
+                         "generator training (contamination fix); 0 = train on full corpus")
+    ap.add_argument("--holdout-seed", type=int, default=1234,
+                    help="seed for the held-out test split; MUST match the classifier's test_seed")
     ap.add_argument("--seed", type=int, default=0)
     return ap
 
@@ -498,6 +541,8 @@ def main() -> None:
         patience=args.patience,
         min_epochs=args.min_epochs,
         warmup_frac=args.warmup_frac,
+        holdout_test_frac=args.holdout_test_frac,
+        holdout_seed=args.holdout_seed,
         seed=args.seed,
     )
 
