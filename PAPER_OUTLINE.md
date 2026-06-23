@@ -58,9 +58,14 @@ as a Capable Alternative to Embedding-Space DDPM*
      convergence — all replicate run_01 (zero exact-copies across all 3 families).
      **Still to run for the full capability claim:** the downstream classifier utility
      curve (§5.5 analogue) on VirusShare — this is the headline experiment and has *not*
-     been run on these families yet. Note: no DDPM baseline exists for VirusShare (Bao et
-     al. is Malicia-only), so the embedding parity (§5.4) is N/A here — frame 5.6 as
-     seq-level fidelity + audit + downstream utility, not a DDPM head-to-head.
+     been run on these families yet. DDPM parity (§5.4): Bao et al. *did* train on VirusShare
+     (top-3 Malicia + 22 largest VS families), but our reproducible DDPM baseline
+     (`comparison/ddpm_baseline_report.json`) only covers the 3 Malicia families — there are
+     NO local DDPM numbers for Obfuscator/Vobfus/Vundo. To add an embedding-parity panel here
+     we'd either lift per-family numbers from the paper (if it reports VS families individually
+     — likely aggregated, verify against `SyntheticMalware.pdf`) or train our own DDPM-on-
+     embeddings on these 3 families via `comparison/lib`. Optional; the cleaner §5.6 framing is
+     seq-level fidelity + audit + downstream utility.
 
 6. **Discussion**
    - Why parity-not-win is the honest and correct framing (DDPM optimizes its home metric).
